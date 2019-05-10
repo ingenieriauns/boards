@@ -15,17 +15,29 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+from decouple import config, Csv
+import dj_database_url
+
+SECRET_KEY = config('SECRET_KEY')
+DEBUG = config('DEBUG', default=False, cast=bool)
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
+DATABASES = {
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL')
+    )
+}
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'k-*jutmacxsf^r8gg+o^4$9=t!423v9)1x^i7%)h(24g0024=8'
+#SECRET_KEY = 'k-*jutmacxsf^r8gg+o^4$9=t!423v9)1x^i7%)h(24g0024=8'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#DEBUG = True
 
-ALLOWED_HOSTS = []
+#ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -39,12 +51,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     #Apps propias
-    'core',
     'boards',
     'accounts',
 
     #Apps de Terceros
     'widget_tweaks',
+    #'dj_database_url',
 ]
 
 MIDDLEWARE = [
